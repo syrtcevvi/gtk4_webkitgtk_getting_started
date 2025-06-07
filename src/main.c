@@ -1,11 +1,14 @@
 #include<gtk/gtk.h>
+#include<webkit/webkit.h>
 
 void application_activate(GtkApplication *application, gpointer _user_data) {
     GtkWidget *main_window = gtk_application_window_new(application);
     gtk_window_set_default_size(GTK_WINDOW(main_window), 800, 600);
 
-    GtkWidget *hello_world_label = gtk_label_new("Hello World!");
-    gtk_window_set_child(GTK_WINDOW(main_window), hello_world_label);
+    GtkWidget *web_view = webkit_web_view_new();
+    webkit_web_view_load_uri(WEBKIT_WEB_VIEW(web_view), "https://github.com/");
+    
+    gtk_window_set_child(GTK_WINDOW(main_window), web_view);
 
     gtk_window_present(GTK_WINDOW(main_window));
 }

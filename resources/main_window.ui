@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<interface>
+  <object class="AdwApplicationWindow" id="main_window">
+    <property name="title">Gtk4 WebKitGtk getting started</property>
+    <property name="default-width">600</property>
+    <property name="default-height">400</property>
+    <child>
+      <object class="GtkBox">
+        <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
+        <child>
+          <object class="AdwHeaderBar"></object>
+        </child>
+        <child>
+          <object class="WebKitWebView" id="web_view">
+            <property name="vexpand">1</property>
+          </object>
+        </child>
+      </object>
+    </child>
+  </object>
+</interface>

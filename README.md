@@ -1,5 +1,7 @@
 # Gtk4 WebKitGtk Getting started
 
+![Gtk4 WebKitGtk Getting started main window image](docs/images/application_main_window.png)
+
 > TODO have a look at the **tutorial.md**
 
 ## 0. Checked platforms

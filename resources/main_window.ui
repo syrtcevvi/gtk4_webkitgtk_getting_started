@@ -1,5 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <interface>
+  <menu id='main_window_menu'>
+    <section>
+      <item>
+        <attribute name="label">_Quit</attribute>
+        <attribute name="action">app.quit</attribute>
+      </item>
+    </section>
+  </menu>
   <object class="AdwApplicationWindow" id="main_window">
     <property name="title">Gtk4 WebKitGtk getting started</property>
     <property name="default-width">600</property>
@@ -8,7 +16,15 @@
       <object class="GtkBox">
         <property name="orientation">GTK_ORIENTATION_VERTICAL</property>
         <child>
-          <object class="AdwHeaderBar"></object>
+          <object class="AdwHeaderBar">
+            <child type="end">
+              <object class="GtkMenuButton">
+                <property name="icon-name">open-menu-symbolic</property>
+                <property name="menu-model">main_window_menu</property>
+                <property name="tooltip-text">Main menu</property>
+              </object>
+            </child>
+          </object>
         </child>
         <child>
           <object class="WebKitWebView" id="web_view">

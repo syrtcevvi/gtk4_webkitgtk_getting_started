@@ -3,7 +3,27 @@
 
 void _register_ui_widget_types() {
     GtkWidget *_web_view = webkit_web_view_new();
-    g_object_unref(_web_view);
+    //* This is a floating object reference, nobody owns it, so it should be removed via g_object_ref_sink
+    //* rather than via g_object_unref in order to avoid a runtime warning
+    g_object_ref_sink(_web_view);
+}
+
+void application_quit(
+    GSimpleAction *action,
+    GVariant *_parameter,
+    gpointer user_data
+) {
+    g_application_quit(G_APPLICATION(user_data));
+}
+
+void _register_application_actions(GtkApplication *application) {
+    const GActionEntry application_action_entries[] = {
+        {"quit", application_quit, NULL, NULL, NULL}
+    };
+    g_action_map_add_action_entries(
+        G_ACTION_MAP(application), application_action_entries,
+        G_N_ELEMENTS(application_action_entries), application
+    );
 }
 
 void application_activate(GtkApplication *application, gpointer _user_data) {
@@ -19,6 +39,7 @@ void application_activate(GtkApplication *application, gpointer _user_data) {
         To opt out this error we need to create a dummy object for each "foreign" type.
     */
     _register_ui_widget_types();
+    _register_application_actions(application);
 
     GtkBuilder *ui_builder = gtk_builder_new_from_file("resources/main_window.ui");
 

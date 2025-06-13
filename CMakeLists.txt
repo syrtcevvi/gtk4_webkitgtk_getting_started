@@ -1,7 +1,10 @@
 cmake_minimum_required(VERSION 3.19)
-# I experience some troubles getting clang++ 14 to work with CMake on Ubuntu 22.04
-# Btw, we don't need C++ here, so here I precisely specify the only used language: C
-project(gtk4_webkitgtk_getting_started C)
+project(
+    gtk4_webkitgtk_getting_started
+    VERSION 1.0
+    # We don't need C++ here, so here I precisely specify the only used language: C
+    LANGUAGES C
+)
 
 set(CMAKE_C_STANDARD 23)
 
@@ -19,3 +22,9 @@ set(SOURCES ${SOURCES_DIR}/main.c)
 
 add_executable(gtk4_webkitgtk_getting_started ${SOURCES})
 target_link_libraries(gtk4_webkitgtk_getting_started ${ADWAITA_LIBRARIES} ${WEBKITGTK_LIBRARIES})
+
+message(STATUS "Copying UI file definition to the build directory")
+file(
+    COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources
+)

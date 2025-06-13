@@ -37,6 +37,23 @@ void _register_main_window_shortcuts(GtkWidget *main_window) {
     );
 }
 
+void web_view_load_changed(
+    WebKitWebView *web_view,
+    WebKitLoadEvent load_event,
+    gpointer web_view_placeholder
+) {
+    switch(load_event) {
+        case WEBKIT_LOAD_FINISHED:
+            // TODO bind these properties somehow
+            gtk_widget_set_visible(GTK_WIDGET(web_view), TRUE);
+            gtk_widget_set_visible(GTK_WIDGET(web_view_placeholder), FALSE);
+            break;
+        default:
+            // noop, just to get rid of warnings
+            break;
+    }
+}
+
 void application_activate(GtkApplication *application, gpointer _user_data) {
     /*
         When we use gtk_builder and xml file with ui definition we might want to use
@@ -60,6 +77,13 @@ void application_activate(GtkApplication *application, gpointer _user_data) {
 
     GtkWidget *web_view = GTK_WIDGET(gtk_builder_get_object(ui_builder, "web_view"));
     webkit_web_view_load_uri(WEBKIT_WEB_VIEW(web_view), "https://github.com/");
+    GtkWidget *web_view_placeholder;
+    if (ADW_CHECK_VERSION(1, 6, 0)) {
+        // TODO Show the AdwSpinner instead of the label
+    } else {
+        web_view_placeholder = GTK_WIDGET(gtk_builder_get_object(ui_builder, "web_view_placeholder_label"));
+    }
+    g_signal_connect(web_view, "load-changed", G_CALLBACK(web_view_load_changed), web_view_placeholder);
 
     g_object_unref(ui_builder);
     gtk_window_present(GTK_WINDOW(main_window));
@@ -68,10 +92,10 @@ void application_activate(GtkApplication *application, gpointer _user_data) {
 int main(int argc, char **argv) {
     AdwApplication *application = adw_application_new(
         "com.gtk4_webkitgtk.getting_started",
-        #ifndef GLIB_VERSION_2_74
-        G_APPLICATION_FLAGS_NONE
-        #else
+        #ifdef GLIB_VERSION_2_74
         G_APPLICATION_DEFAULT_FLAGS
+        #else
+        G_APPLICATION_FLAGS_NONE
         #endif
     );
 

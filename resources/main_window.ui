@@ -27,8 +27,14 @@
           </object>
         </child>
         <child>
+          <object class="GtkLabel" id="web_view_placeholder_label">
+            <property name="label">Please, wait</property>
+          </object>
+        </child>
+        <child>
           <object class="WebKitWebView" id="web_view">
             <property name="vexpand">1</property>
+            <property name="visible">0</property>
           </object>
         </child>
       </object>

@@ -1,5 +1,7 @@
 cmake_minimum_required(VERSION 3.19)
-project(gtk4_webkitgtk_getting_started)
+# I experience some troubles getting clang++ 14 to work with CMake on Ubuntu 22.04
+# Btw, we don't need C++ here, so here I precisely specify the only used language: C
+project(gtk4_webkitgtk_getting_started C)
 
 set(CMAKE_C_STANDARD 23)
 

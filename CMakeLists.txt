@@ -26,5 +26,5 @@ target_link_libraries(gtk4_webkitgtk_getting_started ${ADWAITA_LIBRARIES} ${WEBK
 message(STATUS "Copying UI file definition to the build directory")
 file(
     COPY ${CMAKE_CURRENT_SOURCE_DIR}/resources
-    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/resources
+    DESTINATION ${CMAKE_CURRENT_BINARY_DIR}
 )

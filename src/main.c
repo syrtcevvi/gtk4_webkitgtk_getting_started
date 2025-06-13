@@ -18,11 +18,22 @@ void application_quit(
 
 void _register_application_actions(GtkApplication *application) {
     const GActionEntry application_action_entries[] = {
+        //* The most important line for the shortcuts and menu button accelerators
+        //* Here we bind the app.quit action to the handler
         {"quit", application_quit, NULL, NULL, NULL}
     };
     g_action_map_add_action_entries(
         G_ACTION_MAP(application), application_action_entries,
         G_N_ELEMENTS(application_action_entries), application
+    );
+}
+
+void _register_main_window_shortcuts(GtkWidget *main_window) {
+    GtkEventController *shortcut_controller = gtk_shortcut_controller_new();
+    gtk_widget_add_controller(main_window, shortcut_controller);
+    gtk_shortcut_controller_add_shortcut(
+        GTK_SHORTCUT_CONTROLLER(shortcut_controller),
+        gtk_shortcut_new(gtk_shortcut_trigger_parse_string("<Ctrl>q"), gtk_named_action_new("app.quit"))
     );
 }
 
@@ -45,6 +56,7 @@ void application_activate(GtkApplication *application, gpointer _user_data) {
 
     GtkWidget *main_window = GTK_WIDGET(gtk_builder_get_object(ui_builder, "main_window"));
     gtk_window_set_application(GTK_WINDOW(main_window), GTK_APPLICATION(application));
+    _register_main_window_shortcuts(main_window);
 
     GtkWidget *web_view = GTK_WIDGET(gtk_builder_get_object(ui_builder, "web_view"));
     webkit_web_view_load_uri(WEBKIT_WEB_VIEW(web_view), "https://github.com/");

@@ -1,5 +1,7 @@
 # Gtk4 WebKitGtk Getting started
 
+[![CMake on a single platform](https://github.com/syrtcevvi/gtk4_webkitgtk_getting_started/actions/workflows/cmake-single-platform.yml/badge.svg)](https://github.com/syrtcevvi/gtk4_webkitgtk_getting_started/actions/workflows/cmake-single-platform.yml)
+
 ![Gtk4 WebKitGtk Getting started main window image](docs/images/application_main_window.png)
 
 > TODO have a look at the **tutorial.md**
